@@ -1,0 +1,67 @@
+{% extends "GroupPlanner/layout.html" %}
+{% load static %}
+
+{% block script %}
+<!-- <script src="{% static 'GroupPlanner/showGroup.js' %}"></script> -->
+{% endblock %}
+
+{%block header%}<h1 style="text-align: center;">Welcome To {{group.groupName}}</h1>{%endblock%}
+
+
+{%block nav%}
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'showGroup' group.id %}">{{group.groupName}}</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'groupActivities' group.id %}">Group Activities</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'createActivity' group.id %}">Create Activity</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+</li>
+
+{%endblock%}
+
+{% block body %}
+
+<div id="createActivity">
+
+    {% if message %}
+    <div>{{ message }}</div>
+    {% endif %}
+
+    <h4>Create a new activity, a plan, share an idea or anything you want to do together with this group!!</h4>
+    <form id="compose-form" action="{% url 'createActivity' group.id %}" method="post">
+        {% csrf_token %}
+        <div class="form-group" >
+            <input autofocus required class="form-control" type="text" name="activity_title" data-id="" placeholder="Activity Title">
+        </div>
+
+        <div class="form-group">
+            <label for="appt">Choose a time for your meeting:</label>
+            <input type="datetime-local" name="activity_meetingTime" required>
+        </div>
+
+        <div class="form-group">
+            <label for="street-address">Meeting address</label>
+            <input type="text" id="street-address" name="activity_location" autocomplete="street-address" required enterkeyhint="next">
+        </div>
+        
+
+        <div class="form-group">
+            <textarea class="form-control" name="activity_instructions" placeholder="Instructions for the Activity"></textarea>
+        </div>
+
+
+        <input class="btn btn-primary" type="submit" value="Add">
+    </form>
+
+
+</div>
+
+
+
+
+{% endblock %}

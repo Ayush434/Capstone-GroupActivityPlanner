@@ -1,0 +1,84 @@
+{% extends "GroupPlanner/layout.html" %}
+{% load static %}
+
+{% block script %}
+<script src="{% static 'GroupPlanner/showGroup.js' %}"></script>
+{% endblock %}
+
+{%block header%}<h1 style="text-align: center;">Welcome To {{group.groupName}}</h1>{%endblock%}
+
+
+{%block nav%}
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'showGroup' group.id %}">{{group.groupName}}</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'groupActivities' group.id %}">Group Activities</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'createActivity' group.id %}">Create Activity</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+</li>
+
+{%endblock%}
+
+{% block body %}
+<div id="{{group.id}}_membersList">
+  <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+  <div class="container bootstrap snippets bootdey">
+
+    <div class="header">
+      <h3 class="text-muted prj-name">
+        <span class="fa fa-users fa-2x principal-title"></span>
+        Group members
+      </h3>
+    </div>
+
+    <hr>
+
+    <div id="{{group.id}}_addNewMemeber">
+
+      {% if message %}
+      <div>{{ message }}</div>
+      {% endif %}
+
+      <h2>Add a new member to the group:</h2>
+      <form id="compose-form">
+        {% csrf_token %}
+        <div class="form-group">
+          <input autofocus class="form-control" type="text" id="member" data-id="{{group.id}}"
+            placeholder="Enter a username">
+        </div>
+        <div id="message_addMember_{{group.id}}">
+          <p style="color:red; display: none;" id="message_{{group.id}}"></p>
+        </div>
+        <input class="btn btn-primary" type="submit" value="Add">
+      </form>
+    </div>
+    <br>
+
+    <div class="jumbotron list-content">
+      <ul class="list-group">
+        <li href="#" class="list-group-item title">
+          Your member of {{group.groupName}}
+        </li>
+
+        <div id="members_list_{{group.id}}">
+          {%for m in members%}
+
+          <li href="#" class="list-group-item text-left">
+            <label class="name">
+              {{m}}<br>
+            </label>
+          </li>
+          {%endfor%}
+        </div>
+
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}

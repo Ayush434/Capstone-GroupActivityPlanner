@@ -1,0 +1,65 @@
+{% extends "GroupPlanner/layout.html" %}
+
+
+{%block header%}<h1 style="text-align: center;">Welcome To GroupPlanner</h1>{%endblock%}
+
+{%block nav%}
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'createGroup' %}">New Group</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+</li>
+
+{%endblock%}
+
+{% block body %}
+
+{% if request.user.is_authenticated %}
+
+{%if myGroups%}
+<h2>My Groups</h2>
+{% for group in myGroups %}
+<div class="card">
+    <div class="card-body" id="myGroups_{{group.id}}">
+        <h5 class="card-title">Group Name: <a href="{% url 'showGroup' group.id %}">{{group.groupName}}</a></h5>
+        <p class="card-text">Admin: {{group.groupAdmin}}</p>
+        <p class="card-text">Category: {{group.category}}</p>
+        <p class="card-text">CreatedOn: {{group.timestamp}}</p>
+        <p class="card-text">ID: {{group.id}}</p>
+    </div>
+</div><br>
+{%endfor%}
+{%endif%}
+
+{%if otherGroups%}
+<h2>All Groups:</h2>
+{% for group in otherGroups %}
+<div class="card">
+    <div class="card-body" id="otherGroups_{{group.id}}">
+        <h5 class="card-title">Group Name: <a href="{% url 'showGroup' group.id %}">{{group.groupName}}</a></h5>
+        <p class="card-text">Admin: {{group.groupAdmin}}</p>
+        <p class="card-text">Category: {{group.category}}</p>
+        <p class="card-text">CreatedOn: {{group.timestamp}}</p>
+    </div>
+</div><br>
+{%endfor%}
+{%endif%}
+
+{% if not myGroups and not otherGroups %}
+
+<h4>You don't have any groups yet. please create one using the link in above menu</h4>
+
+{%endif%}
+
+
+{% else %}
+
+<h2>Welcome to Groups Activity Planner</h2>
+<p>You can make groups and add members who have account on this website. Anyone from the group can post activity and
+    people could react by commenting on the activity and let the users know if they are coming or not.
+</p>
+
+{% endif %}
+
+{% endblock %}

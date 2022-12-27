@@ -1,0 +1,25 @@
+body {
+  background: #DFC2F2;
+  background-image: linear-gradient(to right, #ffffb3, #ffe6e6);
+  background-attachment: fixed;
+  background-size: cover;
+  position: flex;
+  margin-top: 20px;
+
+}
+
+
+.navbar {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 20px;
+
+
+  color: #fff;
+
+}

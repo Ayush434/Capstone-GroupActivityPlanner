@@ -1,0 +1,121 @@
+{% extends "GroupPlanner/layout.html" %}
+{% load static %}
+
+{% block script %}
+<link href="{% static 'GroupPlanner/viewActivity.css' %}" rel="stylesheet">
+<script src="{% static 'GroupPlanner/viewActivity.js' %}"></script>
+
+{% endblock %}
+
+
+{%block header%}<h1 style="text-align: center;">Welcome To {{group.groupName}}</h1>{%endblock%}
+
+
+{%block nav%}
+
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'showGroup' group.id %}">{{group.groupName}}</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'groupActivities' group.id %}">Group Activities</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'createActivity' group.id %}">Create Activity</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+</li>
+
+  
+
+{%endblock%}
+
+{% block body %}
+
+    {%if activity%}      
+
+
+    <div class="jumbotron text-center" id="viewActivity">
+        
+        <!-- Title -->
+        <h2 class="card-title h2" id="activityTitle">{{activity.title}}</h2>
+        <br>
+        <!-- Grid row -->
+        <div class="card text-left">
+            <h5 class="card-header h5">Creator: <b>{{activity.activity_creator}}</b></h5>
+            <div class="card-body">
+                <p class="lead"> Meeting Time: {{activity.meeting_time}}</p>
+                <p class="lead"> Meeting Location: {{activity.location}}</p>
+                <p class="lead"> Activity created on: {{activity.timestamp}}</p>
+                <br>
+                <p class="card-text">Instructions: {{activity.instructions}}</p>
+                <br>
+            </div>
+        </div>
+    </div>
+
+    <!-- Displaying comments-->
+    <div class="jumbotron text-center" style="background-color: rgb(198, 228, 127);">
+
+        <!-- Title -->
+        <h3 class="card-title h3">Add comments and let group know if you are going!</h3>
+        
+        <form id="compose-form">
+            {% csrf_token %}
+
+            <div class="form-group text-left">
+                <label>Comment:</label>
+                <textarea required class="form-control" id="comment" data-id="{{group.id}}" data-id2="{{activity.id}}"></textarea>
+            </div>
+
+            <div class="form-group text-left">
+                <label for="activity_status">Are you going to this activity?</label>
+                <select required id="activity_status" >
+                    <option value="yes">Yes</option>
+                    <option value="no">Nah</option>
+                  </select>
+
+            </div>
+    
+    
+            <input class="btn btn-primary" type="submit" value="Add">
+        </form>
+    </div>
+    <!-- End add comments -->
+
+    
+    <!-- Displaying comments-->
+    <div class="jumbotron text-center" id="comments_master_{{group.id}}" style="background-color: rgb(148, 98, 230);">
+        
+        <!-- Title -->
+        <h2 class="card-title h2">COMMENTS</h2>
+        <!-- Subtitle -->
+        <p class="lead my-4">These are the comments left by other users.</p>
+    
+        {% if comments %}
+
+            <div id="activity_comments_{{group.id}}">
+                {% for comment in comments %}
+                    <br>
+                    <!-- Grid row -->
+                    <div class="card text-left">
+                        <h5 class="card-header h5">Member: {{comment.user}}</h5>
+                        <div class="card-body">
+                            <p class="lead">{{comment.comment}}</p>
+                            {%if comment.Iamin == True%}
+                                <p class="card-text">I am going!!</p>
+                            {%else%}
+                                <p class="card-text">:( Not going.</p>
+                            {%endif%}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+        {% endif %}
+            
+    </div>
+
+    {%endif%}
+
+{% endblock %}

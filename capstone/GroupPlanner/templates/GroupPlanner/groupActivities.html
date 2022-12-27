@@ -1,0 +1,68 @@
+{% extends "GroupPlanner/layout.html" %}
+{% load static %}
+
+{% block script %}
+<link href="{% static 'GroupPlanner/activities.css' %}" rel="stylesheet">
+{% endblock %}
+
+{%block header%}<h1 style="text-align: center;">Welcome To {{group.groupName}}</h1>{%endblock%}
+
+
+{%block nav%}
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'showGroup' group.id %}">{{group.groupName}}</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'groupActivities' group.id %}">Group Activities</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'createActivity' group.id %}">Create Activity</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+</li>
+
+{%endblock%}
+
+{% block body %}
+
+{%if activities%}
+
+<div class="container">
+    <div class="row">
+
+        {% for activity in activities%}
+        <div class="col-lg-4">
+            <div class="card card-margin">
+                <div class="card-header no-border">
+                    <h5 class="card-title">Activity: {{activity.title}}</h5>
+                </div>
+                <div class="card-body pt-0">
+                    <div class="widget-49">
+                        <div class="widget-49-title-wrapper">
+                            <div class="widget-49-meeting-info">
+                                <span class="widget-49-pro-title">Location: {{activity.location}}</span>
+                                <span class="widget-49-meeting-time">Meeting Time: {{activity.meeting_time}}</span>
+                            </div>
+                        </div>
+                        <div class="widget-49-meeting-action">
+                            <a href="{% url 'viewActivity' group.id activity.id%}"
+                                class="btn btn-sm btn-flash-border-primary">Learn more</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {%endfor%}
+
+    </div>
+</div>
+
+
+{%else%}
+
+<h3>No Activities</h3>
+
+{%endif%}
+
+{% endblock %}

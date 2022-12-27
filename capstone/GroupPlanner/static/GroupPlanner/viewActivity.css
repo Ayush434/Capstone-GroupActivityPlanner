@@ -1,0 +1,11 @@
+#viewActivity{
+    background-color:rgb(231, 208, 90);
+    border-style: double;
+    border-color: rgb(92, 165, 230);
+    
+}
+
+
+#activityTitle{
+    font-size: 50px;
+}
