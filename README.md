@@ -1,5 +1,7 @@
 # Capstone Project "Group Activity Planner"
 
+link to project video: https://www.youtube.com/watch?v=k3dny491GUU 
+
 ## About
 Website to let users make their groups and add new members who are registered on the website. In the group, members can post a activity with title, instructions and the meeting time and location of the activity
 
