@@ -76,10 +76,20 @@ WSGI_APPLICATION = 'capstone.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'WwuUrswKVEdXbJcxFdofyUMaDmkdUnqI',
+        'HOST': 'nozomi.proxy.rlwy.net',
+        'PORT': '23629',
     }
 }
+
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
+
 
 AUTH_USER_MODEL = 'GroupPlanner.User'
 
